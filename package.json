@@ -1,0 +1,27 @@
+{
+  "name": "make-model",
+  "version": "1.0.0",
+  "description": "根据react组件生成model.json",
+  "bin": {
+    "prettier": "./bin/makemodel.js"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hentaijun/make-model.git"
+  },
+  "author": "hentaijun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hentaijun/make-model/issues"
+  },
+  "homepage": "https://github.com/hentaijun/make-model#readme",
+  "dependencies": {
+    "babylon": "^6.17.4",
+    "chalk": "^2.0.1",
+    "minimist": "^1.2.0"
+  }
+}
