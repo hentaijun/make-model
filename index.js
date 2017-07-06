@@ -8,14 +8,13 @@ function parse(file){
     let model;
     // console.log(ast);
     try{
-        fs.writeFileSync(path.resolve(__dirname,'./test/test.json'),JSON.stringify(ast));
+        model = astUtil.walkAst(ast);
+        return model;
     }catch(e){
         console.error(e);
         process.exit(1);
     }
 
-    model = astUtil.walkAst(ast);
-    return model;
 
     // /\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/
 }
