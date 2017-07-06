@@ -19,8 +19,10 @@ const argv = minimist(process.argv.slice(2), {
     unknown: param => {
         if (param.startsWith("-")) {
             console.warn("Ignored unknown option: " + param + "\n");
-            return false;
+        } else {
+            console.warn(chalk.yellow("请输入参数"));
         }
+        return false;
     }
 });
 
@@ -35,7 +37,7 @@ if (argv["help"]) {
 
         -h,--help                    output usage information
         -v,--version                 output the version number
-        -p <path>,--path <path>      file path
+        -p <path>,--path <path>      Input file path and output model.json
     `
     );
     process.exit(argv["help"] ? 0 : 1);
@@ -50,15 +52,21 @@ if (argv["path"]) {
     } catch (e) {
         process.stdout.write("\n");
         console.error("Unable to read file: " + filePath + "\n" + e);
-        // process.exitCode = 2;
         process.exit(1);
     }
     let model = makemodel.parse(input);
     if (!model) {
         process.exit(1);
     }
-    fs.writeFileSync(outputPath, JSON.stringify(model, null, 4));
-    console.log(`成功写入${outputPath}`)
+    let fileInput = {};
+    try{
+        fileInput = fs.readFileSync(outputPath);
+        fileInput = JSON.parse(fileInput);
+    }catch(e){
+    }
+    let outputModel = Object.assign({},fileInput,model);
+    fs.writeFileSync(outputPath, JSON.stringify(outputModel, null, 4));
+    console.log(chalk.green(`成功生成model.json文件,路径为${outputPath}`))
     process.exit(0);
 }
 

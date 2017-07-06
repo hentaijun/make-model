@@ -5,7 +5,6 @@
     "comType": "present",
     "useRedux": "true",
     "name": "FooterBanner",
-    "props": {},
     "properties": {
         "onClickFun": {
             "desc": "点击事件",
@@ -23,5 +22,9 @@
             "type": "boolean",
             "desc": "banner显示隐藏"
         }
+    },
+    "props": {
+        "bannerImg": "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
+        "footerShow": true
     }
 }

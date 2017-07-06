@@ -1,6 +1,7 @@
 "use strict";
 const Syntax = require("./syntax");
 const _ = require("lodash");
+const chalk = require("chalk");
 const matchRegexObject = require("./regexUtil").matchRegexObject;
 
 function walkAst(ast) {
@@ -14,7 +15,6 @@ function walkAst(ast) {
 
 function walkAstComponentProptypes(classBody) {
     let result = {
-        props: {},
         properties: {}
     };
     _.forEach(classBody, (node, key) => {
@@ -22,7 +22,7 @@ function walkAstComponentProptypes(classBody) {
             let propTypesObject = node.value.properties;
             _.forEach(propTypesObject, (child) => {
                 let childKey = child.key.name;
-                if (childKey == "className" || childKey == "style") {
+                if (childKey == "className" || childKey == "style" || childKey == "children") {
                     return;
                 }
                 if (child.leadingComments) {
@@ -30,7 +30,29 @@ function walkAstComponentProptypes(classBody) {
                     const propertiesValue = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, childValue);
                     // console.log(propertiesValue);
                     result.properties[childKey] = propertiesValue;
+                } else {
+                    console.log(chalk.yellow(`warn:${childKey}属性未配置信息`));
                 }
+            });
+        }
+    });
+    return result;
+}
+
+function walkAstComponentProps(classBody) {
+    let result = {
+        props: {}
+    };
+    _.forEach(classBody, (node, key) => {
+        if (node.type == Syntax.ClassProperty && node.key.name == 'defaultProps') {
+            let propsObject = node.value.properties;
+            _.forEach(propsObject, (child) => {
+                let childKey = child.key.name;
+                if (childKey == "className" || childKey == "style" || childKey == "children") {
+                    return;
+                }
+                let childValue = child.value.value;
+                result.props[childKey] = childValue;
             });
         }
     });
@@ -45,12 +67,20 @@ function walkAstComponentBase(programBody) {
                 return;
             }
             const name = node.declaration["id"].name;
-            const comments = node.leadingComments[0].type == Syntax.CommentBlock
-                ? node.leadingComments[0].value
-                : "";
-            const baseObj = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, comments);
-            const propTypesResult = walkAstComponentProptypes(node.declaration.body.body);
-            result = Object.assign({}, result, baseObj, { name: name }, propTypesResult);
+            if (node.leadingComments) {
+                const comments = node.leadingComments[0].type == Syntax.CommentBlock
+                    ? node.leadingComments[0].value
+                    : "";
+                const baseObj = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, comments);
+                const classBody = node.declaration.body.body;
+                const propTypesResult = walkAstComponentProptypes(classBody);
+                const propsResult = walkAstComponentProps(classBody);
+                result = Object.assign({}, result, baseObj, { name: name }, propTypesResult, propsResult);
+            } else {
+                console.error(chalk.red(`${name}组件基本信息未填写`));
+                process.exit(1);
+            }
+
         }
     });
     return result;

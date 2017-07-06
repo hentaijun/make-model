@@ -6,7 +6,6 @@ const astUtil = require("./src/astUtil");
 function parse(file){
     const ast = parser(file);
     let model;
-    // console.log(ast);
     try{
         model = astUtil.walkAst(ast);
         return model;
@@ -14,9 +13,6 @@ function parse(file){
         console.error(e);
         process.exit(1);
     }
-
-
-    // /\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/
 }
 
 module.exports = {
