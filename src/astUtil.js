@@ -4,7 +4,7 @@ const _ = require("lodash");
 const matchRegexObject = require("./regexUtil").matchRegexObject;
 
 function walkAst(ast) {
-    let result = {child:[]};
+    let result = { child: [] };
     const program = ast.program;
     const programBody = program.body;
     const baseResult = walkAstComponentBase(programBody);
@@ -14,23 +14,23 @@ function walkAst(ast) {
 
 function walkAstComponentProptypes(classBody) {
     let result = {
-        props:{},
-        properties:{}
+        props: {},
+        properties: {}
     };
     _.forEach(classBody, (node, key) => {
         if (node.type == Syntax.ClassProperty && node.key.name == 'propTypes') {
             let propTypesObject = node.value.properties;
             _.forEach(propTypesObject, (child) => {
                 let childKey = child.key.name;
-                if(childKey == "className" || childKey == "style"){
+                if (childKey == "className" || childKey == "style") {
                     return;
                 }
-
-                let childValue = child.leadingComments[0].type == Syntax.CommentBlock ? child.leadingComments[0].value : "";
-                const propertiesValue = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, childValue);
-                // console.log(propertiesValue);
-                result.properties[childKey] = propertiesValue;
-
+                if (child.leadingComments) {
+                    let childValue = child.leadingComments[0].type == Syntax.CommentBlock ? child.leadingComments[0].value : "";
+                    const propertiesValue = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, childValue);
+                    // console.log(propertiesValue);
+                    result.properties[childKey] = propertiesValue;
+                }
             });
         }
     });
@@ -41,7 +41,7 @@ function walkAstComponentBase(programBody) {
     let result = {};
     _.forEach(programBody, (node, key) => {
         if (node.type == Syntax.ExportDefaultDeclaration) {
-            if(node.declaration.type !== Syntax.ClassDeclaration){
+            if (node.declaration.type !== Syntax.ClassDeclaration) {
                 return;
             }
             const name = node.declaration["id"].name;
@@ -50,7 +50,7 @@ function walkAstComponentBase(programBody) {
                 : "";
             const baseObj = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, comments);
             const propTypesResult = walkAstComponentProptypes(node.declaration.body.body);
-            result = Object.assign({}, result, baseObj, { name: name },propTypesResult);
+            result = Object.assign({}, result, baseObj, { name: name }, propTypesResult);
         }
     });
     return result;
