@@ -41,6 +41,9 @@ function walkAstComponentBase(programBody) {
     let result = {};
     _.forEach(programBody, (node, key) => {
         if (node.type == Syntax.ExportDefaultDeclaration) {
+            if(node.declaration.type !== Syntax.ClassDeclaration){
+                return;
+            }
             const name = node.declaration["id"].name;
             const comments = node.leadingComments[0].type == Syntax.CommentBlock
                 ? node.leadingComments[0].value
