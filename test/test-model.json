@@ -1,0 +1,36 @@
+{
+    "name": "FooterBanner",
+    "namespace": "Banner",
+    "comType": "present",
+    "useRedux": true,
+    "props": {
+        "onClickFun": {},
+        "onDownClickFun": {},
+        "bannerImg": "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
+        "footerShow": true
+    },
+    "properties": {
+        "onClickFun": {
+            "type": "function",
+            "desc": "banner整体点击"
+        },
+        "onDownClickFun": {
+            "type": "function",
+            "desc": "banner下载按钮点击"
+        },
+        "bannerImg": {
+            "type": "string",
+            "desc": "banner背景图"
+        },
+        "footerShow": {
+            "type": "boolean",
+            "desc": "banner显示隐藏",
+            "reducer": [
+                "footerbanner",
+                "footerShow"
+            ]
+        }
+    },
+    "description": "底部banner组件",
+    "child": []
+}

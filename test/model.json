@@ -1,0 +1,27 @@
+{
+    "child": [],
+    "description": "底部banner组件",
+    "namespace": "Banner",
+    "comType": "present",
+    "useRedux": "true",
+    "name": "FooterBanner",
+    "props": {},
+    "properties": {
+        "onClickFun": {
+            "desc": "点击事件",
+            "type": "function"
+        },
+        "onDownClickFun": {
+            "desc": "下载事件",
+            "type": "function"
+        },
+        "bannerImg": {
+            "desc": "banner图片地址",
+            "type": "string"
+        },
+        "footerShow": {
+            "type": "boolean",
+            "desc": "banner显示隐藏"
+        }
+    }
+}
