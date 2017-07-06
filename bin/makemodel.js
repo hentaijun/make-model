@@ -42,7 +42,7 @@ if (argv["help"]) {
 }
 
 if (argv["path"]) {
-  let filePath = argv["path"];
+  let filePath = path.resolve(__dirname, process.cwd(), argv["path"]);
   console.log(filePath);
   let input;
   try {
@@ -50,8 +50,9 @@ if (argv["path"]) {
   } catch (e) {
     process.stdout.write("\n");
     console.error("Unable to read file: " + filePath + "\n" + e);
-    process.exitCode = 2;
-    process.exit(2);
+    // process.exitCode = 2;
+    process.exit(1);
   }
-  makemodel.parse(input)
+  makemodel.parse(input);
 }
+

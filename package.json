@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "根据react组件生成model.json",
   "bin": {
-    "prettier": "./bin/makemodel.js"
+    "makemodel": "./bin/makemodel.js"
   },
   "main": "./index.js",
   "scripts": {
