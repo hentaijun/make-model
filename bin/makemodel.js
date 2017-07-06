@@ -44,7 +44,6 @@ if (argv["help"]) {
 if (argv["path"]) {
     let filePath = path.resolve(__dirname, process.cwd(), argv["path"]);
     let outputPath = path.resolve(__dirname, process.cwd(), argv["path"].replace(/(\w+)\.(js|jsx)$/, "model.json"));
-    console.log(filePath);
     let input;
     try {
         input = fs.readFileSync(filePath, "utf8");
@@ -59,5 +58,7 @@ if (argv["path"]) {
         process.exit(1);
     }
     fs.writeFileSync(outputPath, JSON.stringify(model, null, 4));
+    console.log(`成功写入${outputPath}`)
+    process.exit(0);
 }
 
