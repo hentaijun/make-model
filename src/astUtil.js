@@ -35,6 +35,7 @@ function walkAstComponentProptypes(classBody) {
             });
         }
     });
+
     return result;
 }
 
@@ -51,9 +52,9 @@ function walkAstComponentProps(classBody) {
                     return;
                 }
                 let childValue;
-                if(child.value.type == Syntax.FunctionExpression){
+                if (child.value.type == Syntax.FunctionExpression) {
                     childValue = {};
-                }else{
+                } else {
                     childValue = child.value.value;
                 }
                 result.props[childKey] = childValue;
@@ -65,6 +66,7 @@ function walkAstComponentProps(classBody) {
 
 function walkAstComponentBase(programBody) {
     let result = {};
+    let isRequireKey = ["description", "namespace", "comType"]
     _.forEach(programBody, (node, key) => {
         if (node.type == Syntax.ExportDefaultDeclaration) {
             if (node.declaration.type !== Syntax.ClassDeclaration) {
@@ -84,9 +86,19 @@ function walkAstComponentBase(programBody) {
                 console.error(chalk.red(`${name}组件基本信息未填写`));
                 process.exit(1);
             }
-
         }
     });
+    let checkRes = true;
+    for (let i = 0; i < isRequireKey.length; i++) {
+        let requireKey = isRequireKey[i];
+        if (!result[requireKey]) {
+            console.error(chalk.red(`${requireKey}是组件基本信息配置必填项`));
+            checkRes = false;
+        }
+    }
+    if(!checkRes){
+        process.exit(1);
+    }
     return result;
 }
 
