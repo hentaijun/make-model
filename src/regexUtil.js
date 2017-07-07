@@ -6,8 +6,11 @@ function matchRegexObject(regex, str) {
         if (m.index === regex.lastIndex) {
             regex.lastIndex++;
         }
-
-        result[m[1]] = m[2];
+        let value = m[2];
+        if(typeof value == 'string' && value.match(/^\[([\w+\W]+,?)*\]$/)){
+            value = value.slice(1,value.length-1).split(",");
+        }
+        result[m[1]] = value;
     }
     return result;
 }

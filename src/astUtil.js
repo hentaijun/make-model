@@ -27,8 +27,7 @@ function walkAstComponentProptypes(classBody) {
                 }
                 if (child.leadingComments) {
                     let childValue = child.leadingComments[0].type == Syntax.CommentBlock ? child.leadingComments[0].value : "";
-                    const propertiesValue = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, childValue);
-                    // console.log(propertiesValue);
+                    const propertiesValue = matchRegexObject(/\*\s*@(\w+)\s*(.[^\n\r]+)/g, childValue);
                     result.properties[childKey] = propertiesValue;
                 } else {
                     console.log(chalk.yellow(`warn:${childKey}属性未配置信息`));
@@ -51,7 +50,12 @@ function walkAstComponentProps(classBody) {
                 if (childKey == "className" || childKey == "style" || childKey == "children") {
                     return;
                 }
-                let childValue = child.value.value;
+                let childValue;
+                if(child.value.type == Syntax.FunctionExpression){
+                    childValue = {};
+                }else{
+                    childValue = child.value.value;
+                }
                 result.props[childKey] = childValue;
             });
         }

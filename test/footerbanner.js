@@ -11,7 +11,8 @@ import scss from "./style/index.scss";
 export default class FooterBanner extends Component {
   static defaultProps = {
     bannerImg: "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
-    footerShow: true
+    footerShow: true,
+    onClickFun:function(){}
   };
 
   static propTypes = {
@@ -33,6 +34,7 @@ export default class FooterBanner extends Component {
     /**
      * @type boolean
      * @desc banner显示隐藏
+     * @reducer [footerbanner,footerShow]
      */
     footerShow: PropTypes.bool,
     style: PropTypes.object
@@ -41,10 +43,6 @@ export default class FooterBanner extends Component {
   constructor(props) {
     super(props);
   }
-
-  // shouldComponentUpdate() {
-  //     return false;
-  // }
 
   handleOnDownClickFun(e) {
     const { onDownClickFun } = this.props;
