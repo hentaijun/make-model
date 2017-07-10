@@ -11,14 +11,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hentaijun/make-model.git"
+        "url": "git+https://github.com/liuyanjun0416/make-model.git"
     },
     "author": "hentaijun",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/hentaijun/make-model/issues"
+        "url": "https://github.com/liuyanjun0416/make-model/issues"
     },
-    "homepage": "https://github.com/hentaijun/make-model#readme",
+    "homepage": "https://github.com/liuyanjun0416/make-model#readme",
     "dependencies": {
         "babylon": "^6.17.4",
         "chalk": "^2.0.1",
