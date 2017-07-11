@@ -12,7 +12,9 @@ export default class FooterBanner extends Component {
   static defaultProps = {
     bannerImg: "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
     footerShow: true,
-    onClickFun:function(){}
+    onClickFun:function(){},
+    showArray:[1,2,3,4],
+    haha:["123","234"]
   };
 
   static propTypes = {

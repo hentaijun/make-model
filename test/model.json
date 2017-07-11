@@ -30,6 +30,16 @@
     "props": {
         "bannerImg": "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
         "footerShow": true,
-        "onClickFun": {}
+        "onClickFun": {},
+        "showArray": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "haha": [
+            "123",
+            "234"
+        ]
     }
 }

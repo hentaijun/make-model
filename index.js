@@ -6,6 +6,7 @@ const astUtil = require("./src/astUtil");
 function parse(file){
     const ast = parser(file);
     let model;
+    // fs.writeFileSync(path.resolve(__dirname,"test","test.json"),JSON.stringify(ast,null,4));
     try{
         model = astUtil.walkAst(ast);
         return model;

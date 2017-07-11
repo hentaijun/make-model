@@ -5,7 +5,7 @@ const chalk = require("chalk");
 const matchRegexObject = require("./regexUtil").matchRegexObject;
 
 function walkAst(ast) {
-    let result = { child: [] };
+    let result = {};
     const program = ast.program;
     const programBody = program.body;
     const baseResult = walkAstComponentBase(programBody);
@@ -54,7 +54,13 @@ function walkAstComponentProps(classBody) {
                 let childValue;
                 if (child.value.type == Syntax.FunctionExpression) {
                     childValue = {};
-                } else {
+                } else if(child.value.type == Syntax.ArrayExpression){
+                    childValue = [];
+                    let elementArray = child.value.elements;
+                    _.forEach(elementArray,(elem) => {
+                        childValue.push(elem.value);
+                    });
+                }else{
                     childValue = child.value.value;
                 }
                 result.props[childKey] = childValue;
