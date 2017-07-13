@@ -1,4 +1,4 @@
-function matchRegexObject(regex, str) {
+function matchRegexObject(regex, str,base) {
     let m;
     let result = {};
     while ((m = regex.exec(str)) !== null) {
@@ -11,10 +11,9 @@ function matchRegexObject(regex, str) {
         if (typeof value == 'string' && value.match(/^\[([\w+\W]+,?)*\]$/)) {
             value = value.slice(1, value.length - 1).split(",");
         }
-
         if (!key) {
-            key == 'desc';
-            result[key] = result[key] + value;
+            key = base?'description':'desc';
+            result[key] =  result[key]?result[key] + value:value;
         } else {
             result[key] = value;
         }

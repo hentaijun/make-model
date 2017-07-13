@@ -1,5 +1,4 @@
 {
-    "child": [],
     "description": "底部banner组件",
     "namespace": "Banner",
     "comType": "present",
@@ -21,10 +20,7 @@
         "footerShow": {
             "type": "boolean",
             "desc": "banner显示隐藏",
-            "reducer": [
-                "footerbanner",
-                "footerShow"
-            ]
+            "reduce": "r"
         }
     },
     "props": {

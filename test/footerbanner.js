@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import scss from "./style/index.scss";
 
 /**
- * @description 底部banner组件
+ * 底部banner组件
  * @namespace Banner
  * @comType present
  * @useRedux true
@@ -19,23 +19,23 @@ export default class FooterBanner extends Component {
 
   static propTypes = {
     /**
-     * @desc 点击事件
+     * 点击事件
      * @type function
      */
     onClickFun: PropTypes.func,
     /**
-     * @desc 下载事件
+     * 下载事件
      * @type function
      */
     onDownClickFun: PropTypes.func,
     /**
-     * @desc banner图片地址
+     * banner图片地址
      * @type string
      */
     bannerImg: PropTypes.string,
     /**
      * @type boolean
-     * @desc banner显示隐藏
+     * banner显示隐藏
      * @reducer [footerbanner,footerShow]
      */
     footerShow: PropTypes.bool,
