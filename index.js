@@ -18,7 +18,6 @@ function parseComponent(file){
 
 
 function parseFunction(file){
-    console.log(file);
     const text = fs.readFileSync(path.resolve(__dirname,"test","jumpToFxHome.js"), "utf8");
     const ast = parser(text);
     let functionModel;
@@ -30,9 +29,6 @@ function parseFunction(file){
         console.error(e);
     }
 }
-
-parseFunction(path.resolve(__dirname,"test","jumpToFxHome.js"));
-
 module.exports = {
     version:version,
     parseComponent:parseComponent,
