@@ -19,7 +19,7 @@ function parseComponent(file) {
 
 function parseFunction(file) {
     // const text = fs.readFileSync(path.resolve(__dirname,"test","jumpToFxHome.js"), "utf8");
-    const ast = parser(text);
+    const ast = parser(file);
     let functionModel;
     // fs.writeFileSync(path.resolve(__dirname,"test","function-test.json"),JSON.stringify(ast,null,4));
     model = astUtil.walkAstForFunction(ast);
