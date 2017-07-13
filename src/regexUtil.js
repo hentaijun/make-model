@@ -25,7 +25,7 @@ function matchRegexObjectForFunction(regex, str) {
     let m;
     let result = {
         description:"",
-        param:[]
+        params:[]
     };
     while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -48,9 +48,9 @@ function matchRegexObjectForFunction(regex, str) {
             if(typeArray.indexOf(m[2]) === -1){
                 throw Error(`param 类型必须配置类型，类型为"string","array","function","object","number","boolean"`)
             }
-            const paramArray = result[key];
+            const paramArray = result["params"];
             paramArray.push({ name: m[3],type:m[2],description:m[4]});
-            result[key] = paramArray;
+            result["params"] = paramArray;
         }else{
              result[key] = m[3];
         }
