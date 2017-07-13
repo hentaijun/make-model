@@ -28,6 +28,7 @@ function parse(text) {
 
     let ast;
     try {
+        console.log(text);
         ast = babylon.parse(text, babylonOptions);
     } catch (originalError) {
         try {

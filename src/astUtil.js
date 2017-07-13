@@ -2,7 +2,7 @@
 const Syntax = require("./syntax");
 const _ = require("lodash");
 const chalk = require("chalk");
-const matchRegexObject = require("./regexUtil").matchRegexObject;
+const { matchRegexObject, matchRegexObjectForFunction } = require("./regexUtil");
 
 function walkAst(ast) {
     let result = {};
@@ -54,13 +54,13 @@ function walkAstComponentProps(classBody) {
                 let childValue;
                 if (child.value.type == Syntax.FunctionExpression) {
                     childValue = {};
-                } else if(child.value.type == Syntax.ArrayExpression){
+                } else if (child.value.type == Syntax.ArrayExpression) {
                     childValue = [];
                     let elementArray = child.value.elements;
-                    _.forEach(elementArray,(elem) => {
+                    _.forEach(elementArray, (elem) => {
                         childValue.push(elem.value);
                     });
-                }else{
+                } else {
                     childValue = child.value.value;
                 }
                 result.props[childKey] = childValue;
@@ -83,7 +83,7 @@ function walkAstComponentBase(programBody) {
                 const comments = node.leadingComments[0].type == Syntax.CommentBlock
                     ? node.leadingComments[0].value
                     : "";
-                const baseObj = matchRegexObject(/\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/g, comments);
+                const baseObj = matchRegexObject(/\*\s*(?:@(\w+))?\s*([\u4e00-\u9fa5|\w]+)/g, comments);
                 const classBody = node.declaration.body.body;
                 const propTypesResult = walkAstComponentProptypes(classBody);
                 const propsResult = walkAstComponentProps(classBody);
@@ -102,15 +102,42 @@ function walkAstComponentBase(programBody) {
             checkRes = false;
         }
     }
-    if(!checkRes){
+    if (!checkRes) {
         process.exit(1);
     }
     return result;
 }
 
+function walkAstForFunction(ast) {
+    let result = {};
+    const program = ast.program;
+    const programBody = program.body;
+    result = walkAstFunctionBase(programBody);
+    return result;
+}
+
+function walkAstFunctionBase(body) {
+    let resultArray = [];
+    let result = {};
+    _.forEach(body, (node) => {
+        if (node.type === Syntax.ExportDefaultDeclaration || node.type === Syntax.FunctionDeclaration || node.type === Syntax.ExportNamedDeclaration) {
+            if (node.leadingComments) {
+                const name = node.declaration ? node.declaration["id"] && node.declaration["id"].name : node["id"] && node["id"].name;
+                const comments = node.leadingComments[0].type == Syntax.CommentBlock
+                    ? node.leadingComments[0].value
+                    : "";
+                const baseObj = matchRegexObjectForFunction(/\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([\u4e00-\u9fa5|\w]+)\s*([\u4e00-\u9fa5|\w]+)?/g, comments, true);
+                result = Object.assign({}, result, baseObj, { name: name });
+                resultArray.push(result);
+            }
+        }
+    });
+    return resultArray;
+}
 
 module.exports = {
-    walkAst: walkAst
+    walkAst: walkAst,
+    walkAstForFunction: walkAstForFunction
 };
 
 // /\*\s*@(\w+)\s*([\u4e00-\u9fa5|\w]+)/

@@ -3,7 +3,7 @@ const parser = require('./src/parser-babylon');
 const fs = require("fs");
 const path = require("path");
 const astUtil = require("./src/astUtil");
-function parse(file){
+function parseComponent(file){
     const ast = parser(file);
     let model;
     // fs.writeFileSync(path.resolve(__dirname,"test","test.json"),JSON.stringify(ast,null,4));
@@ -16,7 +16,25 @@ function parse(file){
     }
 }
 
+
+function parseFunction(file){
+    console.log(file);
+    const text = fs.readFileSync(path.resolve(__dirname,"test","jumpToFxHome.js"), "utf8");
+    const ast = parser(text);
+    let functionModel;
+    fs.writeFileSync(path.resolve(__dirname,"test","function-test.json"),JSON.stringify(ast,null,4));
+    try{
+        model = astUtil.walkAstForFunction(ast);
+        return model;
+    }catch(e){
+        console.error(e);
+    }
+}
+
+parseFunction(path.resolve(__dirname,"test","jumpToFxHome.js"));
+
 module.exports = {
     version:version,
-    parse:parse
+    parseComponent:parseComponent,
+    parseFunction:parseFunction
 };

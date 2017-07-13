@@ -54,7 +54,7 @@ if (argv["path"]) {
         console.error("Unable to read file: " + filePath + "\n" + e);
         process.exit(1);
     }
-    let model = makemodel.parse(input);
+    let model = makemodel.parseComponent(input);
     if (!model) {
         process.exit(1);
     }
