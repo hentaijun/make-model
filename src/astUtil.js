@@ -127,7 +127,7 @@ function walkAstFunctionBase(body) {
                     ? node.leadingComments[0].value
                     : "";
                 const baseObj = matchRegexObjectForFunction(/\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([\u4e00-\u9fa5|\w]+)\s*([\u4e00-\u9fa5|\w]+)?/g, comments, true);
-                result = Object.assign({}, result, baseObj, { name: name });
+                result = Object.assign({}, result, { name: name },baseObj);
                 resultArray.push(result);
             }
         }

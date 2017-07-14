@@ -29,6 +29,6 @@ export function jumpToFxHome() {
  * test
  *
  */
-export function test(){
+export async function test(){
     console.log(123);
 }
