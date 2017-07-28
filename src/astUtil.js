@@ -80,7 +80,7 @@ function walkAstComponentBase(programBody) {
             }
             const name = node.declaration["id"].name;
             let leadingComments;
-            if(node.declaration.decorators[0].type == Syntax.Decorator){
+            if(Array.isArray(node.declaration.decorators) && node.declaration.decorators[0].type == Syntax.Decorator){
                 leadingComments = node.declaration.decorators[0].leadingComments;
             }else{
                 leadingComments = node.leadingComments

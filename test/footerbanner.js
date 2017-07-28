@@ -9,11 +9,6 @@ import {connect} from "react-redux";
  * @comType present
  * @useRedux true
  */
-@connect(state => {
-    return {
-        pageInfo: state.get("pageListInfo")
-    };
-})
 export default class FooterBanner extends Component {
   static defaultProps = {
     bannerImg: "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
