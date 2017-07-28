@@ -79,9 +79,15 @@ function walkAstComponentBase(programBody) {
                 return;
             }
             const name = node.declaration["id"].name;
-            if (node.leadingComments) {
-                const comments = node.leadingComments[0].type == Syntax.CommentBlock
-                    ? node.leadingComments[0].value
+            let leadingComments;
+            if(node.declaration.decorators[0].type == Syntax.Decorator){
+                leadingComments = node.declaration.decorators[0].leadingComments;
+            }else{
+                leadingComments = node.leadingComments
+            }
+            if (leadingComments) {
+                const comments = leadingComments[0].type == Syntax.CommentBlock
+                    ? leadingComments[0].value
                     : "";
                 const baseObj = matchRegexObject(/\*\s*(?:@(\w+))?\s*([\u4e00-\u9fa5|\w]+)/g, comments,true);
                 const classBody = node.declaration.body.body;

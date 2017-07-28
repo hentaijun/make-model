@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import scss from "./style/index.scss";
+import {connect} from "react-redux";
 
 /**
  * 底部banner组件
@@ -8,6 +9,11 @@ import scss from "./style/index.scss";
  * @comType present
  * @useRedux true
  */
+@connect(state => {
+    return {
+        pageInfo: state.get("pageListInfo")
+    };
+})
 export default class FooterBanner extends Component {
   static defaultProps = {
     bannerImg: "http://s3.fx.kgimg.com/staticPub/images/_41d08a3.png",
