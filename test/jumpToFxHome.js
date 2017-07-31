@@ -7,6 +7,9 @@ import {stat} from "../../base/fetchData";
  * @name jumpToFxHome
  * @module jumpFunc
  * @param {string} a test a
+ * @param {string} b test b
+ * @param {string} c test c
+ * @param {string} d test d
  */
 export function jumpToFxHome() {
     stat(8910);

@@ -1,26 +1,29 @@
 {
-    "description": "底部banner组件",
+    "description": " 底部banner组件，￥{},${123131},test",
     "namespace": "Banner",
     "comType": "present",
     "useRedux": "true",
     "name": "FooterBanner",
     "properties": {
         "onClickFun": {
-            "desc": "点击事件",
+            "desc": " 点击事件${41231123},test，test",
             "type": "function"
         },
         "onDownClickFun": {
-            "desc": "下载事件",
+            "desc": " 下载事件",
             "type": "function"
         },
         "bannerImg": {
-            "desc": "banner图片地址",
+            "desc": " banner图片地址",
             "type": "string"
         },
         "footerShow": {
+            "desc": " banner显示隐藏",
             "type": "boolean",
-            "desc": "banner显示隐藏",
-            "reduce": "r"
+            "reducer": [
+                "footerbanner",
+                "footerShow"
+            ]
         }
     },
     "props": {

@@ -1,0 +1,35 @@
+[
+    {
+        "name": "jumpToFxHome",
+        "description": "拉起繁星客户端首页",
+        "params": [
+            {
+                "name": "a",
+                "type": "string",
+                "description": "test a"
+            },
+            {
+                "name": "b",
+                "type": "string",
+                "description": "test b"
+            },
+            {
+                "name": "c",
+                "type": "string",
+                "description": "test c"
+            },
+            {
+                "name": "d",
+                "type": "string",
+                "description": "test d"
+            }
+        ],
+        "module": "jumpFunc"
+    },
+    {
+        "name": "test",
+        "description": "test",
+        "params": [],
+        "module": "jumpFunc"
+    }
+]

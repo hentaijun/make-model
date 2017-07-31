@@ -27,7 +27,7 @@ function walkAstComponentProptypes(classBody) {
                 }
                 if (child.leadingComments) {
                     let childValue = child.leadingComments[0].type == Syntax.CommentBlock ? child.leadingComments[0].value : "";
-                    const propertiesValue = matchRegexObject(/\*\s*(?:@(\w+))?\s*([\u4e00-\u9fa5|\w]+)/g, childValue);
+                    const propertiesValue = matchRegexObject(/\*\s*(?:@(\w+))?\s*([^\*\n\r\/]+)/g, childValue);
                     result.properties[childKey] = propertiesValue;
                 } else {
                     console.log(chalk.yellow(`warn:${childKey}属性未配置信息`));
@@ -89,7 +89,7 @@ function walkAstComponentBase(programBody) {
                 const comments = leadingComments[0].type == Syntax.CommentBlock
                     ? leadingComments[0].value
                     : "";
-                const baseObj = matchRegexObject(/\*\s*(?:@(\w+))?\s*([\u4e00-\u9fa5|\w]+)/g, comments,true);
+                const baseObj = matchRegexObject(/\*\s*(?:@(\w+))?\s*([^\*\n\r\/]+)/g, comments,true);
                 const classBody = node.declaration.body.body;
                 const propTypesResult = walkAstComponentProptypes(classBody);
                 const propsResult = walkAstComponentProps(classBody);
@@ -132,7 +132,7 @@ function walkAstFunctionBase(body) {
                 const comments = node.leadingComments[0].type == Syntax.CommentBlock
                     ? node.leadingComments[0].value
                     : "";
-                const baseObj = matchRegexObjectForFunction(/\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([\u4e00-\u9fa5|\w]+)\s*([\u4e00-\u9fa5|\w]+)?/g, comments, true);
+                const baseObj = matchRegexObjectForFunction(/\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([^\*\n\r\/\s]+)\s*([^\*\n\r\/]+)?/g, comments, true);
                 result = Object.assign({}, result, { name: name },baseObj);
                 resultArray.push(result);
             }

@@ -4,7 +4,7 @@ import scss from "./style/index.scss";
 import {connect} from "react-redux";
 
 /**
- * 底部banner组件
+ * 底部banner组件，￥{},${123131},test
  * @namespace Banner
  * @comType present
  * @useRedux true
@@ -20,7 +20,7 @@ export default class FooterBanner extends Component {
 
   static propTypes = {
     /**
-     * 点击事件
+     * 点击事件${41231123},test，test
      * @type function
      */
     onClickFun: PropTypes.func,
