@@ -4,6 +4,9 @@ const _ = require("lodash");
 const chalk = require("chalk");
 const { matchRegexObject, matchRegexObjectForFunction } = require("./regexUtil");
 
+const matchComponentCommentsRegx = /\*\s*(?:@(\w+))?\s*([^\*\n\r\/]+)/g;
+const matchFunctionCommentsRegx = /\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([^\*\n\r\/\s]+)\s*([^\*\n\r\/]+)?/g;
+
 function walkAst(ast) {
     let result = {};
     const program = ast.program;
@@ -27,7 +30,7 @@ function walkAstComponentProptypes(classBody) {
                 }
                 if (child.leadingComments) {
                     let childValue = child.leadingComments[0].type == Syntax.CommentBlock ? child.leadingComments[0].value : "";
-                    const propertiesValue = matchRegexObject(/\*\s*(?:@(\w+))?\s*([^\*\n\r\/]+)/g, childValue);
+                    const propertiesValue = matchRegexObject(matchComponentCommentsRegx, childValue);
                     result.properties[childKey] = propertiesValue;
                 } else {
                     console.log(chalk.yellow(`warn:${childKey}属性未配置信息`));
@@ -89,7 +92,7 @@ function walkAstComponentBase(programBody) {
                 const comments = leadingComments[0].type == Syntax.CommentBlock
                     ? leadingComments[0].value
                     : "";
-                const baseObj = matchRegexObject(/\*\s*(?:@(\w+))?\s*([^\*\n\r\/]+)/g, comments,true);
+                const baseObj = matchRegexObject(matchComponentCommentsRegx, comments,true);
                 const classBody = node.declaration.body.body;
                 const propTypesResult = walkAstComponentProptypes(classBody);
                 const propsResult = walkAstComponentProps(classBody);
@@ -132,7 +135,7 @@ function walkAstFunctionBase(body) {
                 const comments = node.leadingComments[0].type == Syntax.CommentBlock
                     ? node.leadingComments[0].value
                     : "";
-                const baseObj = matchRegexObjectForFunction(/\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([^\*\n\r\/\s]+)\s*([^\*\n\r\/]+)?/g, comments, true);
+                const baseObj = matchRegexObjectForFunction(matchFunctionCommentsRegx, comments, true);
                 result = Object.assign({}, result, { name: name },baseObj);
                 resultArray.push(result);
             }
