@@ -2,7 +2,7 @@
 
 根据类jsdoc的形式生成对应的model.json
 
-##命令行用法:
+## 命令行用法:
 ```
     npm install make-model -g
     makemodel -p <filepath>
@@ -15,7 +15,7 @@
     -p,--path <path> 文件路径
 ```
 
-###方法库同步方法
+### 方法库同步方法
 ```
 npm install make-model --save
 
