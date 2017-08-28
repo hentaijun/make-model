@@ -1,6 +1,6 @@
 {
     "name": "make-model",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "根据react组件生成model.json",
     "bin": {
         "makemodel": "./bin/makemodel.js"

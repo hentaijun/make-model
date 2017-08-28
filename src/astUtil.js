@@ -135,6 +135,10 @@ function walkAstFunctionBase(body) {
                 const comments = node.leadingComments[0].type == Syntax.CommentBlock
                     ? node.leadingComments[0].value
                     : "";
+                let testReg = comments.match(matchFunctionCommentsRegx);
+                if(!testReg){
+                    return;
+                }
                 const baseObj = matchRegexObjectForFunction(matchFunctionCommentsRegx, comments, true);
                 result = Object.assign({}, result, { name: name },baseObj);
                 resultArray.push(result);
