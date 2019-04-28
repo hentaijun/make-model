@@ -4,8 +4,8 @@ const _ = require("lodash");
 const chalk = require("chalk");
 const { matchRegexObject, matchRegexObjectForFunction } = require("./regexUtil");
 
-const matchComponentCommentsRegx = /\*\s*(?:@(\w+))?\s*([^\*\n\r]+[^\/])/g;
-const matchFunctionCommentsRegx = /\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([^\*\n\r\s]+[^\/])\s*([^\*\n\r]+[^\/])?/g;
+const matchComponentCommentsRegx = /\*\s*(?:@(\w+))?\s*([\u4e00-\u9fa5_a-zA-Z0-9][^\*\n\r]+)/g;
+const matchFunctionCommentsRegx = /\*\s*(?:@(\w+))?\s*(?:\{(\w+)\})?\s*([^\*\n\r\/\s]+)\s*([^\*\n\r\/]+)?/g;
 
 function walkAst(ast) {
     let result = {};
